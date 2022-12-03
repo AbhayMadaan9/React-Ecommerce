@@ -1,12 +1,13 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import {data} from '../data/Slider_item'
+import {data} from '../data'
+
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 44rem;
   display: flex;
   position: relative;
   overflow: hidden;
@@ -58,6 +59,7 @@ const Image = styled.img`
 const InfoContainer = styled.div`
   flex: 1;
   padding: 50px;
+  margin-top: -12rem;
 `;
 
 const Title = styled.h1`
@@ -89,6 +91,16 @@ const Slider = ()=> {
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   }
+//   useEffect(() => {
+//     return () => {
+//         if (slideIndex > 0) {
+//           setTimeout(setSlideIndex(slideIndex - 1), 1);
+//         } else {
+//           setTimeout(setSlideIndex(slideIndex + 1), 1);
+//         }
+//       }
+    
+// }, [slideIndex])
   return (
     <Container>
     <Arrow direction="left" onClick={() => handleClick("left")}>
