@@ -7,6 +7,7 @@ min-width: 32.5rem;
 height: 60vh;
 margin: 1rem;
 position: relative;
+animation: 3s linear 1s infinite running slide;
 `
 const Image = styled.img`
 width: 100%;

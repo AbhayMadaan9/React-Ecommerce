@@ -10,15 +10,8 @@ padding: 20px;
 justify-content: space-between;
 overflow-x: auto;
 ::-webkit-scrollbar{ width: 0}
-/* animation: scroll 40% infinite;
-@keyframes scroll {
-  0%{
-    transform: translate(0);
-  }
-  100%{
-    transform: translate(100px);
-  }
-} */
+
+
 `
 export default function Categories() {
   return (
