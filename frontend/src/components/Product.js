@@ -1,10 +1,17 @@
+import { useState } from 'react';
 import styled from 'styled-components'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-import { useState } from 'react';
 
 const Container = styled.div`
 flex: 1;
@@ -41,11 +48,7 @@ export const Product = ({ item }) => {
             <Image src={item.img} />
             <Info>
                 <Icon>
-                    <Badge badgeContent={heart_state} color="error">
-                        <FavoriteBorderIcon fontSize='large'/>
-                    </Badge>
-
-
+                    <Checkbox {...label} icon={<FavoriteBorderOutlinedIcon fontSize='large' style={{marginBottom: '-6px'}}/>} checkedIcon={<FavoriteOutlinedIcon color="error" fontSize='large'/>} />
                 </Icon>
                 <Icon>
                     <ShoppingCartOutlinedIcon fontSize='large' />

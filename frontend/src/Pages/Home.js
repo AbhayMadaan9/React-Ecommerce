@@ -7,26 +7,11 @@ import Categories from '../components/Categories'
 import {Products} from   '../components/Products'
 import { Newsletter } from '../components/Newsletter'
 import { Footer } from '../components/Footer'
-
-
-const theme = {
-  colors:{
-    main: "#c5aae8",
-    announce: 'teal',
-    card: '#dbddea'
-  },
-  media:{
-    sm: 807,
-    md: 900,
-    lg: 1200,
-    xl: 1536
-  }
-
-}
+import themes from '../theme'
 export const Home = () => {
   return (
     <>
-     <ThemeProvider theme={theme}>
+     <ThemeProvider theme={themes}>
       <Announcement/>
       <Navbar/>
       <Slider/>
