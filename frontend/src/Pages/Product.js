@@ -67,17 +67,27 @@ margin: 0px 5px;
 `
 
 const AmountContainer = styled.div`
-width: 50%;
 display: flex;
 align-items: center;
 `
-const Amount = styled.span``
+
+const Amount = styled.span`
+font-size: xx-large;
+`
+const Icon = styled.div`
+cursor: pointer;
+`
 export const Product = () => {
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = useState('');
+  const [count, setcount] = useState(1);
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  // function change_count(operation){
+  //   if(operation = "subtract") setcount(count=> count-1);
+  //   else setcount(count=> count+1);
+  // }
   return (
     <ThemeProvider theme={themes}>
         <Announcement/>
@@ -87,7 +97,7 @@ export const Product = () => {
             <Image src='https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&w=600'/>
         </Image_container>
         <Info_container>
-            <Title>{age}</Title>
+            <Title>Set</Title>
             <Desc>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus aperiam harum nulla sint laborum, quisquam, illo magni ratione, nesciunt tempora autem laudantium ullam accusantium eius. Soluta aspernatur voluptas neque corrupti?
             </Desc>
@@ -118,16 +128,20 @@ export const Product = () => {
       </FormControl>
     </Box>
             </Filter_container>
-        </Info_container>
-        {/* <AmountContainer>
-          <Remove/>
-          <Amount>1</Amount>
-          <Add/>
-        </AmountContainer>
-        */}
-        <Button variant='contained' color="default">
+            <AmountContainer>
+              <Icon onClick={()=>{setcount((count > 1)? (count-1 ): 1)}}>
+          <Remove fontSize='large'/>
+          </Icon>
+          <Amount>{count}</Amount>
+          <Icon onClick={()=>{setcount((count <10)? (count+1 ): 10)}}>
+          <Add fontSize='large'/>
+          </Icon>
+          <Button variant='contained' color='default' sx={{marginLeft: '10px'}}>
           ADD TO CART
         </Button> 
+        </AmountContainer>
+        </Info_container>       
+        
     </Container>
     </ThemeProvider>
   )
