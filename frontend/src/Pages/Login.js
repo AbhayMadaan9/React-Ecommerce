@@ -44,6 +44,12 @@ color: white;
 cursor: pointer;
 margin: 20px 0px;
 `
+const Link = styled.a`
+margin-top: 10px;
+text-decoration: none;
+cursor: pointer;
+color: black;
+`
 export const Login = () => {
   return (
     <Container>
@@ -55,6 +61,8 @@ export const Login = () => {
                 {/* <Input placeholder='Username'/>
                 <Input placeholder='password'/> */}
                 <Button>Login</Button> 
+                <Link>Forget Password?</Link>
+                <Link>Create New Account</Link>
             </Form>
         </Wrapper>
     </Container>
