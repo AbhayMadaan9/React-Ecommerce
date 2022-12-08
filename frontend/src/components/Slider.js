@@ -3,7 +3,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {data} from '../data'
-
+import { small_devices } from '../responsive';
 
 const Container = styled.div`
   width: 100%;
@@ -11,6 +11,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+  ${small_devices({"display": "none"})}
 `;
 
 const Arrow = styled.div`

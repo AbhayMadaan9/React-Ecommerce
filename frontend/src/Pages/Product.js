@@ -119,11 +119,11 @@ export const Product = () => {
           label="Age"
           onChange={handleChange}
         >
-          <MenuItem>XS</MenuItem>
-          <MenuItem>S</MenuItem>
-          <MenuItem>M</MenuItem>
-          <MenuItem>L</MenuItem>
-          <MenuItem>XL</MenuItem>
+          <MenuItem value="XS">XS</MenuItem>
+          <MenuItem value="S">S</MenuItem>
+          <MenuItem value="M">M</MenuItem>
+          <MenuItem value="L">L</MenuItem>
+          <MenuItem value="XL">XL</MenuItem>
         </Select>
       </FormControl>
     </Box>
@@ -136,7 +136,7 @@ export const Product = () => {
           <Icon onClick={()=>{setcount((count <10)? (count+1 ): 10)}}>
           <Add fontSize='large'/>
           </Icon>
-          <Button variant='contained' color='default' sx={{marginLeft: '10px'}}>
+          <Button variant='contained' sx={{marginLeft: '10px'}}>
           ADD TO CART
         </Button> 
         </AmountContainer>

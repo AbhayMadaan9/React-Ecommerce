@@ -9,7 +9,9 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 const Container = styled.div`
 display: flex;
-background-color: #f1f3f4;
+background-color: #fcf1ed;
+padding: 1rem;
+flex-wrap: wrap;
 `
 const Left = styled.div`
 flex: 1;

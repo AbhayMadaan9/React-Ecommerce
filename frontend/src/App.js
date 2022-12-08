@@ -8,12 +8,12 @@ import { Cart } from './Pages/Cart'
 export default function App() {
   return (
     <>
-    {/* <Home/> */}
+    <Home/>
     {/* <Product_list/> */}
     {/* <Product/> */}
     {/* <Register/> */}
     {/* <Login/> */}
-    <Cart/>
+    {/* <Cart/> */}
     </>
   )
 }

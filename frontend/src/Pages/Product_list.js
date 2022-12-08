@@ -13,11 +13,15 @@ import { Divider, Button } from '@mui/material'
 import Slider from '@mui/material/Slider';
 import { Numbers } from '@mui/icons-material'
 import { alignProperty } from '@mui/material/styles/cssUtils'
+import { small_devices } from '../responsive'
 
 
 const Container = styled.div`
-display: grid;
-grid-template-columns: 300px auto 300px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+flex-wrap: nowrap;
+${small_devices({"flex-wrap": "wrap"})}
 `
 const Title = styled.h2`
 font-weight: 400;
@@ -33,6 +37,7 @@ height: fit-content;
 border-radius: 1rem;
 box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 margin-top: 7rem;
+
 `
 const FilterText = styled.h1`
 font-size: 20px;

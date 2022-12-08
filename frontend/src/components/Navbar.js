@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import InputBase from '@mui/material/InputBase';
@@ -6,11 +6,27 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
+import { small_devices } from "../responsive";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+// import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+
+
 
 const Container = styled.div`
-height: 8rem;
+height: auto;
 background-color: ${props => props.theme.colors.main};
 color: white;
+
 `
 const Wrapper = styled.div`
 padding: 1rem;
@@ -18,19 +34,23 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-between;
-align-items: "center";
+align-items: center;
+${small_devices({"justify-content": " center"})}
 `
 const Left = styled.div`
 flex: 1;
 margin: 0;
+${small_devices({"flex": "0", "cursor": "pointer"})}
 `
 const Center = styled.div`
 flex: 1;
 margin-top: 1rem;
+${small_devices({"display": "none"})}
 `
 const Right = styled.div`
 flex: 1;
 margin-top: 1rem;
+${small_devices({"display": "none"})}
 `
 // const Searchcontainer = styled.div`
 // display: flex;
@@ -62,12 +82,54 @@ width: 15rem;
 border-radius: 1rem;
 `
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+  
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Container>
+    <Container >
       <Wrapper>
-        <Left> 
+        <Left onClick={()=>{setOpen(true)}} > 
           <Logo src="./STORE.png" />
         </Left>
+        <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+         
+        <AppBar sx={{ position: 'relative', alignItems: "end", backgroundColor: `#c5aae8`}}>
+          <Toolbar>
+          <IconButton
+              edge="end"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <List>
+          <ListItem button>
+            <ListItemText primary="SIGN UP" />
+          </ListItem>
+          <Divider />
+          <ListItem button>
+            <ListItemText
+              primary="SIGN IN"
+              
+            />
+          </ListItem>
+        </List>
+      </Dialog>
         <Center>
            <Paper
       component="form"
@@ -92,6 +154,8 @@ const Navbar = () => {
         </Right>
       </Wrapper>
     </Container>
+    
+
   )
 }
 
