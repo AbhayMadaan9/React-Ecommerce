@@ -1,18 +1,18 @@
 const router = require('express').Router()
 const User = require('../modles/User')
 var bcrypt = require('bcryptjs');
-const dotenv = require('dotenv');
-
+const jwt =  require('jsonwebtoken')
+require('dotenv').config()
 
 //REGISTER ENDPOINT
 router.post('/register', async (req, res) => {
     try {
-        // const salt = await bcrypt.genSalt() 
-        let hashed_password = await bcrypt.hash(req.body.password, 10);
+
+        const hashed_pass =  await bcrypt.hash(req.body.password, 10); 
         const newUser = new User({
             username: req.body.username,
             email: req.body.email,
-            password: hashed_password
+            password: hashed_pass
         });
 
 
@@ -29,13 +29,15 @@ router.post('/register', async (req, res) => {
 //LOGIN ENDPOINT
 router.post('/login', async (req, res) => {
     try {
-        const is_user = await User.find({ username: req.body.username })
-        //return res.send(is_user)
-        if (is_user != NULL) {
-            const is_pass = await bcrypt.compare(req.body.password, User.password)
-            return res.send(is_pass)
-            if (is_pass) {
-                res.status(200).send("logged in")
+        const is_user = await User.findOne({ username: req.body.username })
+        if (is_user != []) {
+            let is_pass = await bcrypt.compare(req.body.password, is_user.password)
+            if (is_pass != []) {
+                const accesstoken =  jwt.sign({
+                    id: is_user.id,
+                    isAdmin: is_user.isAdmin
+                }, process.env.JWT_SEC)
+                res.status(200).send(accesstoken)
             }
         }
     } catch (error) {
