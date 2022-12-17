@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-
+import {Link} from 'react-router-dom'
 
 const Container = styled.div`
 min-width: 32.5rem;
@@ -46,6 +46,7 @@ border-radius: 2rem;
 font-size: large;
 cursor: pointer;
 `
+
 export const Category_item = ({ item }) => {
     const [back_info, set_back_info] = useState(false)
     return (
@@ -56,11 +57,11 @@ export const Category_item = ({ item }) => {
                     <Info>
                         <Para>{item.para}</Para>
                         <Title>{item.title}</Title>
-                        <Button>SHOP MORE</Button>
+                        <Button><Link to={`/products/${item.category}`} style={{color: 'gray', textDecoration: 'none'}}>SHOP MORE</Link></Button>
                     </Info>:
                     <Info>
                         <Title>{item.title}</Title>
-                        <Button>SHOP MORE</Button>
+                        <Button><Link to={`/products/${item.category}`} style={{color: 'gray', textDecoration: 'none'}}>SHOP MORE</Link></Button>
                     </Info>
                     }         
 

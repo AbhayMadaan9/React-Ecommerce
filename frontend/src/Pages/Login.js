@@ -1,6 +1,7 @@
 import styled from  'styled-components'
 import React from 'react'
 import TextField from '@mui/material/TextField';
+import { Link } from 'react-router-dom';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const Container = styled.div`
 width: 100%;
@@ -44,7 +45,7 @@ color: white;
 cursor: pointer;
 margin: 20px 0px;
 `
-const Link = styled.a`
+const a = styled.a`
 margin-top: 10px;
 text-decoration: none;
 cursor: pointer;
@@ -61,8 +62,18 @@ export const Login = () => {
                 {/* <Input placeholder='Username'/>
                 <Input placeholder='password'/> */}
                 <Button>Login</Button> 
-                <Link>Forget Password?</Link>
-                <Link>Create New Account</Link>
+                <Link to='/' style={{
+                  marginTop: '10px',
+                  textDecoration: 'none',
+                  cursor: 'pointer',
+                  color: 'black'
+                }}>Forget Password?</Link>
+                <Link to='/register' style={{
+                  marginTop: '10px',
+                  textDecoration: 'none',
+                  cursor: 'pointer',
+                  color: 'black'
+                }}>Create New Account</Link>
             </Form>
         </Wrapper>
     </Container>

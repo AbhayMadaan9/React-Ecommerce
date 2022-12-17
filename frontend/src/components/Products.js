@@ -17,7 +17,8 @@ justify-content: center;
 align-items: center;
 `
 
-export const Products = () => {
+export const Products = ({colors, brands, sorts, cat}) => {
+  console.log({colors, brands, sorts, cat})
   return (
     <popular_Products>
 

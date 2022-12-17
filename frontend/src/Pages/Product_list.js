@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import styled, { ThemeProvider } from 'styled-components'
 import Navbar from '../components/Navbar'
 import Announcement from '../components/Announcement'
@@ -14,6 +15,8 @@ import Slider from '@mui/material/Slider';
 import { Numbers } from '@mui/icons-material'
 import { alignProperty } from '@mui/material/styles/cssUtils'
 import { small_devices } from '../responsive'
+import { color } from '@mui/system'
+
 
 
 const Container = styled.div`
@@ -21,7 +24,7 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 flex-wrap: nowrap;
-${small_devices({"flex-wrap": "wrap"})}
+${small_devices({ "flex-wrap": "wrap" })}
 `
 const Title = styled.h2`
 font-weight: 400;
@@ -55,16 +58,16 @@ const marks = [
     label: 'Rs 0',
   },
   {
-    value: 20,
-    label: 'Rs 20',
+    value: 200,
+    label: 'Rs 200',
   },
   {
-    value: 37,
-    label: 'Rs 37',
+    value: 370,
+    label: 'Rs 370',
   },
   {
-    value: 100,
-    label: 'Rs 100',
+    value: 1000,
+    label: 'Rs 1000',
   },
 ];
 function valuetext(value) {
@@ -73,6 +76,35 @@ function valuetext(value) {
 
 
 export const Product_list = () => {
+  const location = useLocation();
+  const cat = location.pathname.split("/")[2]
+  const [colors, setcolors] = useState([])
+  const [brands, setbrands] = useState([])
+  const [sorts, setsorts] = useState([])
+  const handle_color = (e) => {
+    e.preventDefault();
+    const value = e.target.value
+    setcolors(
+      colors.concat([e.target.value])
+) 
+    console.log(colors)
+  }
+  const handle_brand = (e) => {
+    e.preventDefault();
+    const value = e.target.value
+    setbrands(
+      brands.concat([e.target.value])
+) 
+    console.log(brands)
+  }
+  const handle_sort = (e) => {
+    e.preventDefault();
+    const value = e.target.value
+    setsorts(
+      sorts.concat([e.target.value])
+) 
+    console.log(sorts)
+  }
   return (
 
     <ThemeProvider theme={themes}>
@@ -84,43 +116,44 @@ export const Product_list = () => {
           <Title>Color</Title>
           <FormGroup>
             <Lists>
-            <FormControlLabel control={<Checkbox />} label="Black" />
-            <FormControlLabel control={<Checkbox />} label="Orange" />
-            <FormControlLabel control={<Checkbox />} label="Orange" />
-            <FormControlLabel control={<Checkbox />} label="Orange" />
-            <FormControlLabel control={<Checkbox />} label="Orange" />
-            <FormControlLabel control={<Checkbox />} label="Orange" />
+              <FormControlLabel control={<Checkbox />} label="Black" value='black' onChange={handle_color} />
+              <FormControlLabel control={<Checkbox />} label="Orange" value='orange' onChange={handle_color} />
+              <FormControlLabel control={<Checkbox />} label="Orange" value='green' onChange={handle_color} />
+              <FormControlLabel control={<Checkbox />} label="Orange" value='blue' onChange={handle_color} />
+              <FormControlLabel control={<Checkbox />} label="Orange" value='gray' onChange={handle_color} />
+              <FormControlLabel control={<Checkbox />} label="Orange" value='white' onChange={handle_color} />
             </Lists>
           </FormGroup>
-          <Divider/>
+          <Divider />
           <Title>Brands</Title>
-            <Lists>
-            <FormControlLabel control={<Checkbox />} label="Black" />
-            <FormControlLabel control={<Checkbox />} label="Nike" />
-            <FormControlLabel control={<Checkbox />} label="Puma" />
-            <FormControlLabel control={<Checkbox />} label="Red Tape" />
-            <FormControlLabel control={<Checkbox />} label="Fort Collins" />
-            <FormControlLabel control={<Checkbox />} label="H&M" />
-            </Lists>
-            <Button variant="contained" color="primary" sx={{margin: '5% 0% 5% 0%', width: 'max-content'}}>Apply Changes</Button>
+          <Lists>
+            <FormControlLabel control={<Checkbox />} label="Gucci" value='gucci' onChange={handle_brand}/>
+            <FormControlLabel control={<Checkbox />} label="Nike" value='nike' onChange={handle_brand}/>
+            <FormControlLabel control={<Checkbox />} label="Puma" value='puma' onChange={handle_brand}/>
+            <FormControlLabel control={<Checkbox />} label="Red Tape" value='red tape' onChange={handle_brand}/>
+            <FormControlLabel control={<Checkbox />} label="Fort Collins" value='fort collins' onChange={handle_brand}/>
+            <FormControlLabel control={<Checkbox />} label="H&M" value='H&M' onChange={handle_brand}/>
+          </Lists>
         </Filter>
-        <Products />
+        <Products colors={colors} brands = {brands} sorts = {sorts} cat = {cat}/>
         <Filter>
           <FilterText>Sort Products</FilterText>
-          <Title>Price</Title>
-          <Slider
-        aria-label="Custom marks"
-        defaultValue={[10, 50]}
-        getAriaValueText={valuetext}
-        step={10}
-        valueLabelDisplay="auto"
-        marks={marks}
-        sx = {{
-          width: '20rem',
-          margin: '2rem',
-        }}
-      />
-      <Button variant="contained" color="primary" sx={{margin: '5% 0% 5% 30%', width: 'max-content'}}>Apply Changes</Button>
+          <Title>Price Range</Title>
+          <FormGroup onChange={handle_sort}>
+            <Lists>
+              <FormControlLabel control={<Checkbox />} label="100-500" value='100-500' onChange={handle_sort} />
+              <FormControlLabel control={<Checkbox />} label="100-500" value='100-500' onChange={handle_sort} />
+              <FormControlLabel control={<Checkbox />} label="1000-5000" value='1000-5000' onChange={handle_sort} />
+              <FormControlLabel control={<Checkbox />} label="5000-10000" value='5000-10000' onChange={handle_sort} />
+              <FormControlLabel control={<Checkbox />} label="10000-50000" value='10000-50000' onChange={handle_sort} />
+              <FormControlLabel control={<Checkbox />} label="50000-100000" value='50000-100000' onChange={handle_sort} />
+            </Lists>
+          </FormGroup>
+          <Divider />
+          <Lists>
+            <FormControlLabel control={<Checkbox />} label="Newest" />
+            <FormControlLabel control={<Checkbox />} label="Older" />
+          </Lists>
         </Filter>
       </Container>
       <Newsletter />

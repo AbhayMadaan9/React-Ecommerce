@@ -28,36 +28,42 @@ export const data = [
       para: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores soluta distinctio, expedita necessitatibus corporis non perspiciatis odio dolorem doloribus, voluptas officia iure velit praesentium commodi dicta itaque magnam facilis sapiente?",
       img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       title: "SHIRT STYLE!",
+      category: "shirts"
     },
     {
       id: 2,
       para: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores soluta distinctio, expedita necessitatibus corporis non perspiciatis odio dolorem doloribus, voluptas officia iure velit praesentium commodi dicta itaque magnam facilis sapiente?",
       img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       title: "LOUNGEWEAR LOVE",
+      category: "loungwear"
     },
     {
       id: 3,
       para: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores soluta distinctio, expedita necessitatibus corporis non perspiciatis odio dolorem doloribus, voluptas officia iure velit praesentium commodi dicta itaque magnam facilis sapiente?",
       img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       title: "LIGHT JACKETS",
+      category: "jackets"
     },
     {
       id: 4,
       para: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores soluta distinctio, expedita necessitatibus corporis non perspiciatis odio dolorem doloribus, voluptas officia iure velit praesentium commodi dicta itaque magnam facilis sapiente?",
       img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       title: "SHIRT STYLE!",
+      category: "shirts"
     },
     {
       id: 5,
       para: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores soluta distinctio, expedita necessitatibus corporis non perspiciatis odio dolorem doloribus, voluptas officia iure velit praesentium commodi dicta itaque magnam facilis sapiente?",
       img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       title: "LOUNGEWEAR LOVE",
+      category: "loungwear"
     },
     {
       id: 6,
       para: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores soluta distinctio, expedita necessitatibus corporis non perspiciatis odio dolorem doloribus, voluptas officia iure velit praesentium commodi dicta itaque magnam facilis sapiente?",
       img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       title: "LIGHT JACKETS",
+      category: "lightjackets"
     },
   ];
 

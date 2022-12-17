@@ -19,7 +19,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-
+import {Link} from 'react-router-dom'
 
 
 const Container = styled.div`
@@ -119,14 +119,19 @@ const Navbar = () => {
         </AppBar>
         <List>
           <ListItem button>
-            <ListItemText primary="SIGN UP" />
+          <Link to='signup'>
+            <ListItemText
+              primary="SIGN UP"
+            />
+            </Link>
           </ListItem>
           <Divider />
           <ListItem button>
+            <Link to='signin'>
             <ListItemText
               primary="SIGN IN"
-              
             />
+            </Link>
           </ListItem>
         </List>
       </Dialog>
@@ -148,8 +153,8 @@ const Navbar = () => {
         </Center>
         <Right>
           <Icons>
-            <Icons_item>SIGN IN</Icons_item>
-            <Icons_item>SIGN UP</Icons_item>
+            <Icons_item><Link to='/sign' style={{textDecoration: 'none', color: 'white'}}>SIGN IN</Link></Icons_item>
+            <Icons_item><Link to='/sign' style={{textDecoration: 'none', color: 'white'}}>SIGN UP</Link></Icons_item>
           </Icons>
         </Right>
       </Wrapper>
