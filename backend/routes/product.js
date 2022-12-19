@@ -47,39 +47,39 @@ router.delete('/:id', verifytoken, async(req, res)=>{
 
 //GET PRODUCT
 router.get('/:id', verifytoken, async(req, res)=>{
-    if(req.user.isAdmin)
-    {
         try{
       const product_info =  await Product.findById(req.params.id)
         res.status(200).send(product_info)
     } catch (error) {
         res.status(500).send(error)
     }
-    }
+    
     
 }) 
-module.exports = router
 
 //GET ALL PRODUCT
-// router.get('/all', verifytoken, async(req, res)=>{
-//     const qcategory = req.query.category
-//     //let Products 
-//         try{
-//             // if(qcategory)
-//             // {
-//             //      Products = await Product.find({categories: {
-//             //         $in: [qcategory]
-//             //     } })
-//             // }
-//             // else
-//             // {
-//               const   Products = await Product.find()
-            
-        
-//         res.status(200).send(Products)
-//     } catch (error) {
-//         res.status(500).send(error)
-//     }
+router.get('/', async(req, res)=>{
+    const qNew = req.query.new;
+  const qCategory = req.query.category;
+  try {
+    let products;
+
+    if (qNew) {
+      products = await Product.find().sort({ createdAt: -1 }).limit(1);
+    } else if (qCategory) {
+      products = await Product.find({
+        categories: {
+          $in: [qCategory],
+        },
+      });
+    } else {
+      products = await Product.find();
+    }
+    res.header("Access-Control-Allow-Origin", "*")
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
     
-// }) 
+}) 
 module.exports = router

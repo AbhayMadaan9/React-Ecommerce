@@ -57,11 +57,11 @@ export const Category_item = ({ item }) => {
                     <Info>
                         <Para>{item.para}</Para>
                         <Title>{item.title}</Title>
-                        <Button><Link to={`/products/${item.category}`} style={{color: 'gray', textDecoration: 'none'}}>SHOP MORE</Link></Button>
+                        <Button><Link to={`/products?category=${item.category}`} style={{color: 'gray', textDecoration: 'none'}}>SHOP MORE</Link></Button>
                     </Info>:
                     <Info>
                         <Title>{item.title}</Title>
-                        <Button><Link to={`/products/${item.category}`} style={{color: 'gray', textDecoration: 'none'}}>SHOP MORE</Link></Button>
+                        <Button><Link to={`/products?category=${item.category}`} style={{color: 'gray', textDecoration: 'none'}}>SHOP MORE</Link></Button>
                     </Info>
                     }         
 

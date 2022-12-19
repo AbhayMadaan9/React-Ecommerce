@@ -17,7 +17,7 @@ export default function App() {
     element: <Home/>,
   },
   {
-    path: "/products",
+    path: "/products/*",
     element: <Product_list/> ,
   },
   {

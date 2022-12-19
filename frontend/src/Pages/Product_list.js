@@ -76,8 +76,10 @@ function valuetext(value) {
 
 
 export const Product_list = () => {
-  const location = useLocation();
-  const cat = location.pathname.split("/")[2]
+  const location = useLocation().search;
+  //const cat = location.pathname.split("/")[2]
+  const cat = new URLSearchParams(location).get('category')
+  console.log(cat)
   const [colors, setcolors] = useState([])
   const [brands, setbrands] = useState([])
   const [sorts, setsorts] = useState([])
@@ -87,7 +89,7 @@ export const Product_list = () => {
     setcolors(
       colors.concat([e.target.value])
 ) 
-    console.log(colors)
+
   }
   const handle_brand = (e) => {
     e.preventDefault();
@@ -95,7 +97,7 @@ export const Product_list = () => {
     setbrands(
       brands.concat([e.target.value])
 ) 
-    console.log(brands)
+  
   }
   const handle_sort = (e) => {
     e.preventDefault();
@@ -103,7 +105,6 @@ export const Product_list = () => {
     setsorts(
       sorts.concat([e.target.value])
 ) 
-    console.log(sorts)
   }
   return (
 
@@ -151,8 +152,8 @@ export const Product_list = () => {
           </FormGroup>
           <Divider />
           <Lists>
-            <FormControlLabel control={<Checkbox />} label="Newest" />
-            <FormControlLabel control={<Checkbox />} label="Older" />
+            <FormControlLabel control={<Checkbox />} label="Newest" value='newest' onChange={handle_sort}/>
+            <FormControlLabel control={<Checkbox />} label="Older" value='older' onChange={handle_sort}/>
           </Lists>
         </Filter>
       </Container>

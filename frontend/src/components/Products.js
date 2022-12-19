@@ -1,7 +1,9 @@
 import styled from 'styled-components'
-import React from 'react'
-import { popularProducts } from '../data'
+import React, {useState, useEffect} from 'react'
+//import { popularProducts } from '../data'
 import { Product } from './Product'
+import axios from 'axios'
+
 
 const popular_Products = styled.div`
 display: flex;
@@ -19,13 +21,29 @@ align-items: center;
 
 export const Products = ({colors, brands, sorts, cat}) => {
   console.log({colors, brands, sorts, cat})
+  const [products, setproducts] = useState([]);
+  const [filteredproducts, setfilteredproducts] = useState([]);
+  
+  useEffect(()=>{
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(
+          cat
+            ? `http://localhost:5000/product?category=${cat}`
+            : "http://localhost:5000/product"
+        );
+        setproducts(res.data);
+      } catch (err) {}
+    };
+    getProducts();
+  }, [cat])
   return (
     <popular_Products>
 
-   <h1 style={{textAlign: 'center'}}>Popular Products</h1>
+   <h1 style={{textAlign: 'center'}}>{cat} Products</h1>
     <Container>
 
-        {popularProducts.map(item=>(
+        {products.map(item=>(
             <Product item={item} key={item.id}/>
         ))}
     </Container>
