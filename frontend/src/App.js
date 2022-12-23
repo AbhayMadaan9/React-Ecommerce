@@ -21,7 +21,7 @@ export default function App() {
     element: <Product_list/> ,
   },
   {
-    path: "/product",
+    path: "/product/*",
     element: <Product/>  ,
   },
   {

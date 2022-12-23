@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const verifytoken = require('./verifytoken');
 const Product = require('../modles/Product')
-
 //ADD 
 router.post('/', verifytoken, async(req, res)=>{
     if(req.user.isAdmin)
@@ -46,14 +45,15 @@ router.delete('/:id', verifytoken, async(req, res)=>{
 }) 
 
 //GET PRODUCT
-router.get('/:id', verifytoken, async(req, res)=>{
+router.get('/:id' ,async(req, res)=>{
         try{
       const product_info =  await Product.findById(req.params.id)
+    //  res.header("Access-Control-Allow-Origin", "*")
         res.status(200).send(product_info)
     } catch (error) {
         res.status(500).send(error)
     }
-    
+   
     
 }) 
 

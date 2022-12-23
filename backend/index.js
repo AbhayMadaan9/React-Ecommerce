@@ -4,8 +4,9 @@ const app = express()
 app.use(express.json())
 require('./database_connection')
 //require('dotenv').config()
+const cors = require('cors')
 app.use(express.json())
-
+app.use(cors())
 //ENDPOINTS
 app.use('/auth', require('./routes/auth'));
 app.use('/user', require('./routes/user'));

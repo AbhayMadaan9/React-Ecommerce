@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import themes from '../theme'
 import Navbar from '../components/Navbar'
@@ -10,6 +10,8 @@ import Select from '@mui/material/Select';
 import { Box } from '@mui/system'
 import { Add, Remove } from '@mui/icons-material'
 import { Button } from '@mui/material'
+import { useLocation } from 'react-router-dom'
+import { publicRequest } from '../requestMethods'
 
 const Container = styled.div`
 margin: 50px;
@@ -88,26 +90,41 @@ export const Product = () => {
   //   if(operation = "subtract") setcount(count=> count-1);
   //   else setcount(count=> count+1);
   // }
+  const location = useLocation();
+   const product_id = location.pathname.split("/")[2]
+   const [productInfo, setproductInfo] = useState({})
+   useEffect(() => {
+   const info = async()=>{
+    try {
+      const res = await publicRequest.get("/product/"+product_id)
+      setproductInfo(res.data);
+    } catch (error) {
+      
+    }
+   }
+   info();
+   }, [productInfo])
+   console.log({productInfo})
   return (
     <ThemeProvider theme={themes}>
         <Announcement/>
     <Navbar/>
     <Container>
         <Image_container>
-            <Image src='https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&w=600'/>
+            <Image src={productInfo.img}/>
         </Image_container>
         <Info_container>
-            <Title>Set</Title>
+            <Title>{productInfo.title}</Title>
             <Desc>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus aperiam harum nulla sint laborum, quisquam, illo magni ratione, nesciunt tempora autem laudantium ullam accusantium eius. Soluta aspernatur voluptas neque corrupti?
+              {productInfo.desc}
             </Desc>
-            <Price>Rs. 10, 000</Price>
+            <Price>{productInfo.price}</Price>
             <Filter_container>
               <Filter>
                 <FilterText>Color</FilterText>
-                <FilterColor color='black'></FilterColor>
-                <FilterColor color='gray'></FilterColor>
-                <FilterColor color='blue'></FilterColor>
+                {productInfo.color?.map(item=>(
+                  <FilterColor color={item} key={item}></FilterColor>
+                ))}
               </Filter>
                 <Box sx={{ minWidth: 120, marginLeft: '50px', }}>
       <FormControl fullWidth>
@@ -119,11 +136,9 @@ export const Product = () => {
           label="Age"
           onChange={handleChange}
         >
-          <MenuItem value="XS">XS</MenuItem>
-          <MenuItem value="S">S</MenuItem>
-          <MenuItem value="M">M</MenuItem>
-          <MenuItem value="L">L</MenuItem>
-          <MenuItem value="XL">XL</MenuItem>
+            {productInfo.color?.map(item=>(
+                  <MenuItem value={item} key={item}>XS</MenuItem>
+                ))}
         </Select>
       </FormControl>
     </Box>

@@ -1,23 +1,19 @@
 import { useState } from 'react';
 import styled from 'styled-components'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import Badge from '@mui/material/Badge';
 import Checkbox from '@mui/material/Checkbox';
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import Favorite from '@mui/icons-material/Favorite';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { Link } from 'react-router-dom';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
 const Container = styled.div`
 flex: 1;
 margin: 5px;
-min-width: 280px;
-height: 350px;
+min-width: 260px;
+height: 300px;
 display: flex;
 flex-direction: row;
 align-items: center;
@@ -54,7 +50,9 @@ export const Product = ({ item }) => {
                     <ShoppingCartOutlinedIcon fontSize='large' />
                 </Icon>
                 <Icon >
+                    <Link to={`/product/${item._id}`}>
                     <SearchOutlinedIcon fontSize='large' />
+                    </Link>
                 </Icon>
 
             </Info>
