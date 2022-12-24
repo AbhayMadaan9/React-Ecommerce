@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import themes from '../theme'
 import Navbar from '../components/Navbar'
@@ -12,6 +12,9 @@ import { Add, Remove } from '@mui/icons-material'
 import { Button } from '@mui/material'
 import { useLocation } from 'react-router-dom'
 import { publicRequest } from '../requestMethods'
+import { addProduct } from '../redux/cartRedux'
+import { useDispatch } from 'react-redux'
+
 
 const Container = styled.div`
 margin: 50px;
@@ -45,7 +48,7 @@ const Price = styled.span`
 font-weight: 100;
 font-size: 30px;
 `
-const Filter_container = styled.div `
+const Filter_container = styled.div`
 display: flex;
 justify-content: space-between;
 width: 50%;
@@ -64,8 +67,9 @@ const FilterColor = styled.div`
 width: 20px;
 height: 20px;
 border-radius: 50%;
-background-color: ${props=>props.color};
+background-color: ${props => props.color};
 margin: 0px 5px;
+cursor: pointer;
 `
 
 const AmountContainer = styled.div`
@@ -82,82 +86,95 @@ cursor: pointer;
 export const Product = () => {
   const [age, setAge] = useState('');
   const [count, setcount] = useState(1);
+  const [size, setsize] = useState("L")
+  const [color, setcolor] = useState("black")
+  const dispatch = useDispatch()
 
   const handleChange = (event) => {
     setAge(event.target.value);
+    setsize(event.target.value);
   };
   // function change_count(operation){
   //   if(operation = "subtract") setcount(count=> count-1);
   //   else setcount(count=> count+1);
   // }
   const location = useLocation();
-   const product_id = location.pathname.split("/")[2]
-   const [productInfo, setproductInfo] = useState({})
-   useEffect(() => {
-   const info = async()=>{
-    try {
-      const res = await publicRequest.get("/product/"+product_id)
-      setproductInfo(res.data);
-    } catch (error) {
-      
+  const product_id = location.pathname.split("/")[2]
+  const [productInfo, setproductInfo] = useState({})
+
+  useEffect(() => {
+    const info = async () => {
+      try {
+        const res = await publicRequest.get("/product/" + product_id)
+        setproductInfo(res.data);
+      } catch (error) {
+
+      }
     }
-   }
-   info();
-   }, [productInfo])
-   console.log({productInfo})
+    info();
+  }, [productInfo])
+
+let price = productInfo.price; 
+  const handleClick = () => {
+    dispatch(
+      addProduct({...productInfo, count, price })
+    );
+   // console.log({count, color, size, ...productInfo})
+  };
+  // console.log(productInfo)
   return (
     <ThemeProvider theme={themes}>
-        <Announcement/>
-    <Navbar/>
-    <Container>
+      <Announcement />
+      <Navbar />
+      <Container>
         <Image_container>
-            <Image src={productInfo.img}/>
+          <Image src={productInfo.img} />
         </Image_container>
         <Info_container>
-            <Title>{productInfo.title}</Title>
-            <Desc>
-              {productInfo.desc}
-            </Desc>
-            <Price>{productInfo.price}</Price>
-            <Filter_container>
-              <Filter>
-                <FilterText>Color</FilterText>
-                {productInfo.color?.map(item=>(
-                  <FilterColor color={item} key={item}></FilterColor>
-                ))}
-              </Filter>
-                <Box sx={{ minWidth: 120, marginLeft: '50px', }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Size</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-            {productInfo.color?.map(item=>(
-                  <MenuItem value={item} key={item}>XS</MenuItem>
-                ))}
-        </Select>
-      </FormControl>
-    </Box>
-            </Filter_container>
-            <AmountContainer>
-              <Icon onClick={()=>{setcount((count > 1)? (count-1 ): 1)}}>
-          <Remove fontSize='large'/>
-          </Icon>
-          <Amount>{count}</Amount>
-          <Icon onClick={()=>{setcount((count <10)? (count+1 ): 10)}}>
-          <Add fontSize='large'/>
-          </Icon>
-          <Button variant='contained' sx={{marginLeft: '10px'}}>
-          ADD TO CART
-        </Button> 
-        </AmountContainer>
-        </Info_container>       
-        
-    </Container>
+          <Title>{productInfo.title}</Title>
+          <Desc>
+            {productInfo.desc}
+          </Desc>
+          <Price>{productInfo.price}</Price>
+          <Filter_container>
+            <Filter>
+              <FilterText>Color</FilterText>
+              {productInfo.color?.map(item => (
+                <FilterColor color={item} key={item}  onClick={() => { setcolor(item) }}></FilterColor>
+              ))}
+            </Filter>
+            <Box sx={{ minWidth: 120, marginLeft: '50px', }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Size</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  {productInfo.size?.map(item => (
+                    <MenuItem value={item} key={item}>{item}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          </Filter_container>
+          <AmountContainer>
+            <Icon onClick={() => { setcount((count > 1) ? (count - 1) : 1) }}>
+              <Remove fontSize='large' />
+            </Icon>
+            <Amount>{count}</Amount>
+            <Icon onClick={() => { setcount((count < 10) ? (count + 1) : 10) }}>
+              <Add fontSize='large' />
+            </Icon>
+            <Button variant='contained' sx={{ marginLeft: '10px' }} onClick={handleClick}>
+              ADD TO CART
+            </Button>
+          </AmountContainer>
+        </Info_container>
+
+      </Container>
     </ThemeProvider>
   )
 }

@@ -1,13 +1,10 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import PersonIcon from '@mui/icons-material/Person';
 import { small_devices } from "../responsive";
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
@@ -19,7 +16,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Badge } from "@mui/icons-material";
+
+//import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+
 
 
 const Container = styled.div`
@@ -35,22 +38,22 @@ flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-between;
 align-items: center;
-${small_devices({"justify-content": " center"})}
+${small_devices({ "justify-content": " center" })}
 `
 const Left = styled.div`
 flex: 1;
 margin: 0;
-${small_devices({"flex": "0", "cursor": "pointer"})}
+${small_devices({ "flex": "0", "cursor": "pointer" })}
 `
 const Center = styled.div`
 flex: 1;
 margin-top: 1rem;
-${small_devices({"display": "none"})}
+${small_devices({ "display": "none" })}
 `
 const Right = styled.div`
 flex: 1;
 margin-top: 1rem;
-${small_devices({"display": "none"})}
+${small_devices({ "display": "none" })}
 `
 // const Searchcontainer = styled.div`
 // display: flex;
@@ -87,7 +90,7 @@ const Navbar = () => {
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
-  
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -95,71 +98,74 @@ const Navbar = () => {
   return (
     <Container >
       <Wrapper>
-        <Left onClick={()=>{setOpen(true)}} > 
+        <Left onClick={() => { setOpen(true) }} >
           <Logo src="./STORE.png" />
         </Left>
         <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-         
-        <AppBar sx={{ position: 'relative', alignItems: "end", backgroundColor: `#c5aae8`}}>
-          <Toolbar>
-          <IconButton
-              edge="end"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <List>
-          <ListItem button>
-          <Link to='signup'>
-            <ListItemText
-              primary="SIGN UP"
-            />
-            </Link>
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <Link to='signin'>
-            <ListItemText
-              primary="SIGN IN"
-            />
-            </Link>
-          </ListItem>
-        </List>
-      </Dialog>
-        <Center>
-           <Paper
-      component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-    >
-           <InputBase
-        sx={{ ml: 1, flex: 1}}
-        placeholder="Search.."
-        inputProps={{ 'aria-label': 'search google maps' }}
-      />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
+          fullScreen
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
 
-      </Paper>
+          <AppBar sx={{ position: 'relative', alignItems: "end", backgroundColor: `#c5aae8` }}>
+            <Toolbar>
+              <IconButton
+                edge="end"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          <List>
+            <ListItem button>
+              <Link to='signup'>
+                <ListItemText
+                  primary="SIGN UP"
+                />
+              </Link>
+            </ListItem>
+            <Divider />
+            <ListItem button>
+              <Link to='signin'>
+                <ListItemText
+                  primary="SIGN IN"
+                />
+              </Link>
+            </ListItem>
+
+          </List>
+        </Dialog>
+        <Center>
+          <Paper
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search.."
+              inputProps={{ 'aria-label': 'search google maps' }}
+            />
+            <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+
+          </Paper>
         </Center>
         <Right>
           <Icons>
-            <Icons_item><Link to='/sign' style={{textDecoration: 'none', color: 'white'}}>SIGN IN</Link></Icons_item>
-            <Icons_item><Link to='/sign' style={{textDecoration: 'none', color: 'white'}}>SIGN UP</Link></Icons_item>
+            <Icons_item><Link to='/sign' style={{ textDecoration: 'none', color: 'white' }}>SIGN IN</Link></Icons_item>
+            <Icons_item><Link to='/sign' style={{ textDecoration: 'none', color: 'white' }}>SIGN UP</Link></Icons_item>
+            <Link to ='/Cart'><ShoppingCartIcon color="white" fontSize="large"/></Link>
+
           </Icons>
         </Right>
       </Wrapper>
     </Container>
-    
+
 
   )
 }

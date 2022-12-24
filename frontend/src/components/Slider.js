@@ -1,6 +1,6 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {data} from '../data'
 import { small_devices } from '../responsive';
@@ -116,7 +116,7 @@ const Slider = ()=> {
           <InfoContainer>
             <Title>{item.title}</Title>
             <Desc>{item.desc}</Desc>
-            <Button><a to="#">SHOP NOW</a></Button>
+            <Button><a href="#">SHOP NOW</a></Button>
           </InfoContainer>
         </Slide>
       ))}

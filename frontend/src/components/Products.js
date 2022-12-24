@@ -5,7 +5,7 @@ import { Product } from './Product'
 import axios from 'axios'
 
 
-const popular_Products = styled.div`
+const Popular_Products = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -20,7 +20,6 @@ align-items: center;
 `
 
 export const Products = ({filters, sorts, cat}) => {
-  console.log({filters})
   const [products, setproducts] = useState([]);
   const [filteredproducts, setfilteredproducts] = useState([]);
   
@@ -67,7 +66,7 @@ export const Products = ({filters, sorts, cat}) => {
   }, [sorts]);
 
   return (
-    <popular_Products>
+    <Popular_Products>
 
    <h1 style={{textAlign: 'center'}}>{cat} </h1>
     <Container>
@@ -78,6 +77,6 @@ export const Products = ({filters, sorts, cat}) => {
           <Product item={item} key={item.id}/>
       ))}
     </Container>
-    </popular_Products>
+    </Popular_Products>
   )
 }

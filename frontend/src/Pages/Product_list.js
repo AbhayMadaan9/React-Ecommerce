@@ -65,7 +65,6 @@ const Option = styled.option``;
 export const Product_list = () => {
   const location = useLocation().search;
   const cat = new URLSearchParams(location).get('category')
-  console.log(cat)
   const [filters, setfilters] = useState({})
   const [sorts, setsorts] = useState("newest")
 

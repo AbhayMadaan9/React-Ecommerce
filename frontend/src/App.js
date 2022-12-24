@@ -9,8 +9,13 @@ import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
+import {store} from './redux/store'
+import { Provider } from 'react-redux'
+
+
 export default function App() {
   const user = true;
+
   const router = createBrowserRouter([
   {
     path: "/",
@@ -41,9 +46,9 @@ export default function App() {
   return (
     
     <>
-    
+      <Provider store={store}>
       <RouterProvider router={router} />
-      
+      </Provider>
     </>
   )
 }
