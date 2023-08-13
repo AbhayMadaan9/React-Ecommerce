@@ -65,16 +65,20 @@ const Option = styled.option``;
 export const Product_list = () => {
   const location = useLocation().search;
   const cat = new URLSearchParams(location).get('category')
-  const [filters, setfilters] = useState({})
+  const [color, setcolor] = useState("white")
   const [sorts, setsorts] = useState("newest")
+  const [size, setsize] = useState("l")
 
-  const handleFilters = (e) => {
-    const value = e.target.value;
-    setfilters({
-      ...filters,
-      [e.target.name]: value,
-    });
+  const handle_color = (e) => {
+    setcolor(e.target.value);
   };
+  const handle_size = (e) => {
+    setsize(e.target.value);
+  };
+  const handle_sort = (e) => {
+    setsorts(e.target.value);
+  };
+
   return (
 
     <ThemeProvider theme={themes}>
@@ -83,28 +87,29 @@ export const Product_list = () => {
       <Container>
         <Filter>
         <FilterText>Filter Products:</FilterText>
-          <Select name="color" onChange={handleFilters}>
+          <Select name="color" onChange={handle_color}>
             <Option disabled>Color</Option>
-            <Option>white</Option>
-            <Option>black</Option>
-            <Option>red</Option>
-            <Option>blue</Option>
-            <Option>yellow</Option>
-            <Option>green</Option>
+            <Option value="white">white</Option>
+            <Option value="black">black</Option>
+            <Option value="red">red</Option>
+            <Option value="blue">blue</Option>
+            <Option value="yellow">yellow</Option>
+            <Option value="green">green</Option>
+            <Option value="Rainbow">Rainbow</Option>
           </Select>
-          <Select name="size" onChange={handleFilters}>
+          <Select name="size" onChange={handle_size}>
             <Option disabled>Size</Option>
-            <Option>XS</Option>
-            <Option>S</Option>
-            <Option>M</Option>
-            <Option>L</Option>
-            <Option>XL</Option>
+            <Option value="XS">XS</Option>
+            <Option value="S">S</Option>
+            <Option value="M">M</Option>
+            <Option value="L">L</Option>
+            <Option value="XL">XL</Option>
           </Select>
         </Filter>
-        <Products filters = {filters} sorts = {sorts} cat = {cat}/>
+        <Products color = {color} sorts = {sorts} cat = {cat} size={size}/>
         <Filter>
         <FilterText>Sort Products:</FilterText>
-          <Select onChange={(e) => setsorts(e.target.value)}>
+          <Select onChange={handle_sort}>
             <Option value="newest">Newest</Option>
             <Option value="asc">Price (asc)</Option>
             <Option value="desc">Price (desc)</Option>

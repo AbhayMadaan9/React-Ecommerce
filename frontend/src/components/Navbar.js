@@ -19,9 +19,11 @@ import Slide from '@mui/material/Slide';
 import { Link } from 'react-router-dom'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from "@mui/icons-material";
-
+import { useDispatch, useSelector } from "react-redux";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 //import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Logout } from "../redux/apiCalls";
 
 
 
@@ -29,7 +31,9 @@ const Container = styled.div`
 height: auto;
 background-color: ${props => props.theme.colors.main};
 color: white;
-
+position: sticky;
+z-index: 1;
+top: 0;
 `
 const Wrapper = styled.div`
 padding: 1rem;
@@ -85,6 +89,9 @@ width: 15rem;
 border-radius: 1rem;
 `
 const Navbar = () => {
+  const dispatch = useDispatch()
+  const {islogin} = useSelector((state)=>state.user)
+  console.log(islogin)
   const [open, setOpen] = useState(false);
 
   const Transition = React.forwardRef(function Transition(props, ref) {
@@ -94,51 +101,56 @@ const Navbar = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+const handle_logout = ()=>{
+  Logout(dispatch);
+}
   return (
     <Container >
       <Wrapper>
-        <Left onClick={() => { setOpen(true) }} >
-          <Logo src="./STORE.png" />
+        <Left onClick={() => { islogin && setOpen(true) }} >
+          <Link to='/'><Logo src="./STORE.png" /></Link>
         </Left>
+    {!islogin &&
         <Dialog
-          fullScreen
-          open={open}
-          onClose={handleClose}
-          TransitionComponent={Transition}
-        >
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
 
-          <AppBar sx={{ position: 'relative', alignItems: "end", backgroundColor: `#c5aae8` }}>
-            <Toolbar>
-              <IconButton
-                edge="end"
-                color="inherit"
-                onClick={handleClose}
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <List>
-            <ListItem button>
-              <Link to='signup'>
-                <ListItemText
-                  primary="SIGN UP"
-                />
-              </Link>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Link to='signin'>
-                <ListItemText
-                  primary="SIGN IN"
-                />
-              </Link>
-            </ListItem>
+        <AppBar sx={{ position: 'relative', alignItems: "end", backgroundColor: `#c5aae8` }}>
+          <Toolbar>
+            <IconButton
+              edge="end"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <List>
 
-          </List>
-        </Dialog>
+          <ListItem >
+            <Link to='/register'>
+              <ListItemText
+                primary="Register"
+              />
+            </Link>
+          </ListItem>
+          <Divider />
+          <ListItem >
+            <Link to='/login'>
+              <ListItemText
+                primary="Login"
+              />
+            </Link>
+          </ListItem>
+
+        </List>
+      </Dialog> 
+    }
         <Center>
           <Paper
             component="form"
@@ -157,10 +169,18 @@ const Navbar = () => {
         </Center>
         <Right>
           <Icons>
-            <Icons_item><Link to='/sign' style={{ textDecoration: 'none', color: 'white' }}>SIGN IN</Link></Icons_item>
-            <Icons_item><Link to='/sign' style={{ textDecoration: 'none', color: 'white' }}>SIGN UP</Link></Icons_item>
-            <Link to ='/Cart'><ShoppingCartIcon color="white" fontSize="large"/></Link>
-
+           {islogin? 
+            <>
+            <Icons_item><Link to='/profile' style={{ textDecoration: 'none', color: 'white'}}><AccountCircleOutlinedIcon fontSize="large"/></Link></Icons_item>
+           <Icons_item><Link to ='/Cart'><ShoppingCartIcon color="white" fontSize="large"/></Link> </Icons_item>
+            <Icons_item onClick={handle_logout}><LogoutIcon fontSize="large"/></Icons_item>
+            </> 
+           :
+           <>
+            <Icons_item><Link to='/login' style={{ textDecoration: 'none', color: 'white' }}>Login</Link></Icons_item>
+            <Icons_item><Link to='/Register' style={{ textDecoration: 'none', color: 'white' }}>Register</Link></Icons_item>
+           </>
+          }
           </Icons>
         </Right>
       </Wrapper>

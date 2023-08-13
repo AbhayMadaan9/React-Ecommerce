@@ -1,17 +1,15 @@
 const router = require('express').Router()
 const Cart = require('../modles/Cart')
 const verifytoken = require('./verifytoken')
+
 //ADD 
-router.post('/:user_id', verifytoken, async(req, res)=>{
-    if(req.user.id === req.params.user_id )
-    {
-        const newProduct = new Cart(req.body)
+router.post('/', async(req, res)=>{
+        const newProduct = new Cart(req.body);
     try {
         await newProduct.save();
         res.status(200).send("Product is added to cart")
     } catch (error) {
         res.status(500).send(error)
-    }
     }
     
 })
@@ -43,6 +41,7 @@ router.delete('/:id/:user_id', verifytoken, async(req, res)=>{
     }
     
 }) 
+
 
 //GET CART PRODUCTS 
 router.get('/:user_id', verifytoken, async(req, res)=>{

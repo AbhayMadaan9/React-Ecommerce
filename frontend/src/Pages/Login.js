@@ -1,7 +1,13 @@
 import styled from  'styled-components'
-import React from 'react'
+import React, {useState} from 'react'
 import TextField from '@mui/material/TextField';
 import { Link } from 'react-router-dom';
+import {login} from '../redux/apiCalls'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+
+
+
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const Container = styled.div`
 width: 100%;
@@ -45,23 +51,40 @@ color: white;
 cursor: pointer;
 margin: 20px 0px;
 `
-const a = styled.a`
-margin-top: 10px;
-text-decoration: none;
-cursor: pointer;
-color: black;
-`
+// const A = styled.a`
+// margin-top: 10px;
+// text-decoration: none;
+// cursor: pointer;
+// color: black;
+// `
 export const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { islogin, error } = useSelector((state) => state.user);
+  const [userinfo, setuserinfo] = useState({
+    username: "",
+    password: ""
+  })
+  const handle_change = (e)=>{
+    const {name, value} = e.target;
+    setuserinfo({...userinfo, [name]: value})
+  }
+  const handle_login = (e)=>{
+    e.preventDefault();
+    login(dispatch, userinfo);
+  }
+  islogin && navigate("/")
   return (
     <Container>
         <Wrapper>
             <Title>LOGIN</Title>
             <Form>
-            <TextField id="outlined-basic" label="Username" variant="outlined" sx={{margin: '15px 0px', width: '50%'}} />
-            <TextField id="outlined-basic" label="Password" variant="outlined" sx={{margin: '15px 0px', width: '50%'}}/>
+            <TextField id="outlined-basic" label="Username" variant="outlined" name='username' sx={{margin: '15px 0px', width: '50%'}} onChange={handle_change} />
+            <TextField id="outlined-basic" label="Password" variant="outlined" type='password' name='password' sx={{margin: '15px 0px', width: '50%'}} onChange={handle_change}/>
                 {/* <Input placeholder='Username'/>
                 <Input placeholder='password'/> */}
-                <Button>Login</Button> 
+                {error && "Invalid Credentials. Try again"}
+                <Button onClick={handle_login} disabled={islogin}>Login</Button> 
                 <Link to='/' style={{
                   marginTop: '10px',
                   textDecoration: 'none',

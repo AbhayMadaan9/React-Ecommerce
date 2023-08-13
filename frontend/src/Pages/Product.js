@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from '@mui/system'
-import { Add, Remove } from '@mui/icons-material'
+ import { Add, Remove } from '@mui/icons-material'
 import { Button } from '@mui/material'
 import { useLocation } from 'react-router-dom'
 import { publicRequest } from '../requestMethods'
@@ -17,20 +17,21 @@ import { useDispatch } from 'react-redux'
 
 
 const Container = styled.div`
-margin: 50px;
 padding: 30px;
 display: flex;
 flex-direction: row;
 justify-content: center;
 flex-wrap: wrap;
+::-webkit-scrollbar{ width: 0}
 `
 const Image_container = styled.div`
 flex: 1;
+height: 350px;
 `
 const Image = styled.img`
 width: 100%;
-height: 90vh;
-object-fit: cover;
+height: 100%;
+object-fit: contain;
 `
 const Info_container = styled.div`
 flex: 1;
@@ -91,7 +92,6 @@ export const Product = () => {
   const dispatch = useDispatch()
 
   const handleChange = (event) => {
-    setAge(event.target.value);
     setsize(event.target.value);
   };
   // function change_count(operation){
@@ -112,10 +112,11 @@ export const Product = () => {
       }
     }
     info();
-  }, [productInfo])
+  }, [product_id])
 
 let price = productInfo.price; 
   const handleClick = () => {
+    alert("Product added to cart successfully")
     dispatch(
       addProduct({...productInfo, count, price })
     );
@@ -135,7 +136,7 @@ let price = productInfo.price;
           <Desc>
             {productInfo.desc}
           </Desc>
-          <Price>{productInfo.price}</Price>
+          <Price>Rs.{productInfo.price}</Price>
           <Filter_container>
             <Filter>
               <FilterText>Color</FilterText>
@@ -149,8 +150,8 @@ let price = productInfo.price;
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
-                  label="Age"
+                  value={size}
+                  label="Size"
                   onChange={handleChange}
                 >
                   {productInfo.size?.map(item => (

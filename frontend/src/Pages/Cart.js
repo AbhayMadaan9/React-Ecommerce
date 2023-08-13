@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import Navbar from '../components/Navbar'
 import styled, { ThemeProvider } from 'styled-components'
 import themes from '../theme'
@@ -6,7 +6,16 @@ import Announcement from '../components/Announcement'
 import {Footer} from  '../components/Footer'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import StripeCheckout from 'react-stripe-checkout'
+import { userRequest } from '../requestMethods'
+import { useNavigate } from 'react-router-dom'
+import { ClearProduct } from '../redux/cartRedux'
+import { Link } from 'react-router-dom'
+
+
+
+
 const Container = styled.div`
 padding: 20px;
 `
@@ -148,22 +157,51 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 export const Cart = () => {
+  const KEY = "pk_test_51MEYh2SBEh820AWwuastYJE8jRpCi49hOQqbwV3iy7suNmOea113ozx5VR7AyhnEnP3bMox6yNcxVd9HpUQG3WsY00HNTuuSi5";
+  let res;
   const cart = useSelector((state) => state.cart);
+  const [stripeToken, setStripeToken] = useState(null);
+  
+  const navigate = useNavigate();
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+         res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.price,
+        });
+        navigate("/success", {state: {stripeData: res.data, cart: cart}}) 
+      }
+        catch{}
+    }
+    stripeToken && makeRequest();
+  }, [stripeToken, cart.price]);
+  const dispatch = useDispatch()
+  const handle_clear = ()=>{
+    
+    dispatch(
+      ClearProduct()
+    );
+  }
     return (
         <ThemeProvider theme={themes}>
-            
                 <Announcement/>
                 <Navbar />
                 <Container>
                 <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopButton><Link to="/">CONTINUE SHOPPING</Link></TopButton>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
+            <TopText onClick={handle_clear}>clear all</TopText>
           </TopTexts>
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
@@ -183,17 +221,17 @@ export const Cart = () => {
                     <ProductColor color={product.color} />
                     <ProductSize>
                       <b>Size:</b> {product.size}
-                    </ProductSize>
+                    </ProductSize>  
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
                     <AddIcon />
-                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <ProductAmount>{product.count}</ProductAmount>
                     <RemoveIcon />
                   </ProductAmountContainer>
                   <ProductPrice>
-                    $ {product.price * product.quantity}
+                    $ {product.price * product.count}
                   </ProductPrice>
                 </PriceDetail>
               </Product>
@@ -203,21 +241,32 @@ export const Cart = () => {
           <Summary>
           <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>Rs.{cart.price}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemPrice>Rs. 5.90</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemPrice>Rs. -5.90</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {cart.price}</SummaryItemPrice>
+              <SummaryItemPrice>Rs. {cart.price}</SummaryItemPrice>
             </SummaryItem>
+            <StripeCheckout
+              name="Madaan store"
+              image="https://avatars.githubusercontent.com/u/78895271?v=4"
+              billingAddress
+              shippingAddress
+              description={`Your total is Rs.${cart.price}`}
+              amount={cart.price * 100}
+              token={onToken}
+              stripeKey={KEY}
+            >
             <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
                 </Container>

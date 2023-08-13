@@ -1,6 +1,12 @@
 import styled from  'styled-components'
-import React from 'react'
+import React, {useState} from 'react'
 import Checkbox from '@mui/material/Checkbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../redux/apiCalls';
+import { Link, useNavigate } from 'react-router-dom';
+
+
+
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const Container = styled.div`
@@ -50,23 +56,47 @@ padding: 15px 20px;
 background-color: teal;
 color: white;
 cursor: pointer;
+pointer-events:${(props)=>props.disabled?'none':null};
 `
 export const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.user);
+  const [userinfo, setuserinfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+    phone:"",
+    address:'',
+    gender:'male'
+  })
+  const handle_change = (e)=>{
+    const {name, value} = e.target;
+    setuserinfo({...userinfo, [name]: value})
+  }
+  const handle_register = (e)=>{
+    e.preventDefault();
+    register(dispatch, userinfo);
+    navigate("/login")
+  }
   return (
     <Container>
         <Wrapper>
             <Title>CREATE ACCOUNT</Title>
             <Form>
-                <Input placeholder='First Name'/>
-                <Input placeholder='Last Name'/>
-                <Input placeholder='Username'/>
-                <Input placeholder='password'/>
-                <Input placeholder='Confirm Password'/>
+                <Input placeholder='Email' name='email' type='email' onChange={handle_change}/>
+                <Input placeholder='Username' name='username' type='string' onChange={handle_change}/>
+                <Input placeholder='password' name='password' type='password' onChange={handle_change}/>
+                <Input placeholder='phone' name='phone' type='number' onChange={handle_change}/>
+                <Input placeholder='address' name='address' type='text' onChange={handle_change}/>
+                <Input placeholder='gender' name='gender' type='text' onChange={handle_change}/>
+                <div style={{paddingTop: "12px"}}><Link to="/login">Already a user</Link></div>
                 <Aggrement>
                 <Checkbox {...label} defaultChecked />
                     <Text>By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b></Text>
                     </Aggrement>
-                <Button>CREATE</Button> 
+                    {error && "User already exists"}
+                <Button onClick={handle_register} disabled={userinfo.email.length === 0 && userinfo.username.length === 0 && userinfo.password.length === 0}>CREATE</Button> 
             </Form>
         </Wrapper>
     </Container>

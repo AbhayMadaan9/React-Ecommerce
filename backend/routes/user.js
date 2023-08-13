@@ -6,14 +6,31 @@ require('dotenv').config()
 const verifytoken = require('./verifytoken');
 
 
+//GETUSER for admin
+router.post('/', verifytoken, async (req, res) => {
+    try {
 
+        //validate user and check if he/she is admin or not (authorization)
+        if (req.user.isAdmin) {
+            const hashed_pass = await bcrypt.hash(req.body.data.password, 10);
+             req.body.data.password = hashed_pass;
+            console.log(hashed_pass)
+            const user_info = await User.create(req.body.data)
+            await user_info.save();
+            return res.status(200).send("user added successfully");
+        }
+    } catch (error) {
+        return res.status(500).json(error.message)
+    }
+
+})
 //UPDATE 
 router.put('/:id', verifytoken, async (req, res) => {
     try {
         //validate user and check if he/she is admin or not (authorization)
-        if (req.user.id === req.params.id) {
+        if (req.user.isAdmin) {
             //again encrypt the password
-            if (req.body.password) {
+            if (req.body.password) { 
                 req.body.password = await bcrypt.hash(req.body.password, 10);
             }
             const updateduser = await User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
@@ -40,11 +57,11 @@ router.delete('/:id', verifytoken, async (req, res) => {
 
 })
 
-//GETUSER
+//GETUSER for admin
 router.get('/:id', verifytoken, async (req, res) => {
     try {
         //validate user and check if he/she is admin or not (authorization)
-        if (req.user.id === req.params.id) {
+        if (req.user.isAdmin) {
 
             const user_info = await User.findById(req.params.id).select("-password");
             return res.status(200).send(user_info);

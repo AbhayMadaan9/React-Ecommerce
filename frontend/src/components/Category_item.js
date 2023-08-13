@@ -3,11 +3,10 @@ import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 
 const Container = styled.div`
-min-width: 32.5rem;
+min-width: 30rem;
 height: 60vh;
 margin: 1rem;
 position: relative;
-animation: 3s linear 1s infinite running slide;
 `
 const Image = styled.img`
 width: 100%;

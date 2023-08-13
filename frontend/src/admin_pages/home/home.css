@@ -1,0 +1,14 @@
+.home{
+    display: flex;
+    flex-direction: row;
+}
+.left{
+    flex: .3;
+}
+.right{
+    flex: .7;
+}
+.homeWidgets{
+    display: flex;
+    margin: 20px;
+}

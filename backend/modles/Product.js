@@ -11,7 +11,6 @@ const ProductSchema = new mongoose.Schema({
     },
     img: {
         type: String,
-        required: true
     },
     categories: {
         type: Array
@@ -25,6 +24,9 @@ const ProductSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
+    },
+    stock: {
+        type: Number
     },
 
 });

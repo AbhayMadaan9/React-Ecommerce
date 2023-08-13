@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 //import { popularProducts } from '../data'
 import { Product } from './Product'
 import axios from 'axios'
+import { filledInputClasses } from '@mui/material'
 
 
 const Popular_Products = styled.div`
@@ -19,7 +20,7 @@ justify-content: center;
 align-items: center;
 `
 
-export const Products = ({filters, sorts, cat}) => {
+export const Products = ({color,size, sorts, cat}) => {
   const [products, setproducts] = useState([]);
   const [filteredproducts, setfilteredproducts] = useState([]);
   
@@ -32,23 +33,31 @@ export const Products = ({filters, sorts, cat}) => {
             : "http://localhost:5000/product"
         );
         setproducts(res.data);
+        setfilteredproducts(res.data);
       } catch (err) {}
     };
     getProducts();
   }, [cat])
   //now we have get the products of the given category now we filter them according to size, color, brands etc.. (filers object contain these)
   useEffect(() => {
-    cat &&
+    cat && 
     setfilteredproducts(
-        products.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
-          )
-        )
-        
-      );
-  }, [products, cat, filters]);
-  //sort them according to time.
+        products.filter((item) => {
+          if (color && size) {
+            return  (item.color.includes(color) && item.size.includes(size));
+          }
+          if (color) {
+            return item.color.includes(color);
+          }
+          if (size) {
+            return item.size.includes(size);
+          }
+         })
+    );
+
+  }, [color, size]);
+  
+
   useEffect(() => {
     if (sorts === "newest") {
       setfilteredproducts((prev) =>
@@ -62,21 +71,24 @@ export const Products = ({filters, sorts, cat}) => {
       setfilteredproducts((prev) =>
         [...prev].sort((a, b) => b.price - a.price)
       );
-    }
+  }
   }, [sorts]);
 
   return (
-    <Popular_Products>
+    <>
 
+    <Popular_Products>
    <h1 style={{textAlign: 'center'}}>{cat} </h1>
     <Container>
-
          { cat? filteredproducts.map(item=>(
             <Product item={item} key={item.id}/>
         )): products.slice(0,5).map(item=>(
           <Product item={item} key={item.id}/>
       ))}
+     
     </Container>
     </Popular_Products>
+    </>
+   
   )
 }

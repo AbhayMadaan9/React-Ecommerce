@@ -9,12 +9,19 @@ import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
-import {store} from './redux/store'
-import { Provider } from 'react-redux'
+import { useSelector } from 'react-redux'
+import Success from './Pages/Success'
+import AdminHome from './admin_pages/home/AdminHome'
+import UserList from './admin_pages/userList/UserList'
+import User from './admin_pages/user/User'
+import ProductList from './admin_pages/productList/ProductList'
+import UpdateProduct from './admin_pages/product/UpdateProduct'
+import NewProduct from './admin_pages/newProduct/NewProduct'
+import NewUser from './admin_pages/newUser/NewUser'
 
 
 export default function App() {
-  const user = true;
+  const {islogin} = useSelector((state)=>state.user)
 
   const router = createBrowserRouter([
   {
@@ -30,8 +37,8 @@ export default function App() {
     element: <Product/>  ,
   },
   {
-    path: "/sign",
-    element: user? <Login/>: <Register/>,
+    path: "/login",
+    element: <Login/>
   },
   {
     path: "/register",
@@ -40,15 +47,46 @@ export default function App() {
   {
     path: "/cart",
     element: <Cart/> ,
-  }
+  },
+  {
+    path: "/success",
+    element: <Success/> ,
+  },
+  {
+    path: "/profile",
+    element: <AdminHome/>,
+  },
+  {
+    path: "/users",
+    element: <UserList/> ,
+  },
+  {
+    path: "/users/:_id",
+    element: <User/> ,
+  },
+  {
+    path: "/allproducts",
+    element: <ProductList/>,
+  },
+  {
+    path: "/products/:_id",
+    element: <UpdateProduct/> ,
+  },
+  {
+    path: "/newproduct",
+    element: <NewProduct/> ,
+  },
+  {
+    path: "/newUser",
+    element: <NewUser/> ,
+  },
+
   
 ]);
   return (
     
     <>
-      <Provider store={store}>
       <RouterProvider router={router} />
-      </Provider>
     </>
   )
 }
